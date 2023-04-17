@@ -16,8 +16,13 @@ def index(request):
             return HttpResponseRedirect(reverse('gestion_tienda:consolaAdministrador')) #Redireccionamos a la consola de adminstración de usuarios
         else:
             return HttpResponseRedirect(reverse('gestion_tienda:index')) #Nos lleva a la ruta index de la aplicación gestion_tienda
-    return render(request,'ingresoUsuario.html')                         #Ya no hace request, renderiza la vista de login   
+    return render(request,'ingresoUsuario.html')   #Ya no hace request, renderiza la vista de login   
+    
+@login_required(login_url='http://127.0.0.1:8000')
+def cerrarSesion(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('gestion_tienda:index'))
 
-@login_required(login_url='http://127.0.0.1:8000')      # En caso usuario no haya sido autenticado se va la ruta vacía
+@login_required(login_url='http://127.0.0.1:8000')  # En caso usuario no haya sido autenticado se va la ruta vacía
 def consolaAdministrador(request):
     return render(request,'consolaAdministrador.html')
